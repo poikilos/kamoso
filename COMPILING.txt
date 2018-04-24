@@ -1,0 +1,18 @@
+sudo dnf install -y kdevelop gstreamer-plugins-base gstreamer-plugins-good gstreamer-devel cmake
+#NOTE: There is no gstreamer-plugins-good-devel
+#gstreamer-plugins-base-devel
+#resolve `Could not find a package configuration file provided by "ECM"`:
+sudo dnf install -y extra-cmake-modules
+#resolve `Could not find a package configuration file provided by "Qt5Quick"`:
+sudo dnf install -y qt5-qtquickcontrols2-devel
+#resolve `-- Could NOT find KF5Config (missing: KF5Config_DIR)`:
+sudo dnf install -y kf5-kconfig-devel
+#others (similar error as above but DocTools, DocToolsConfig, KF5KIO, KF5KIOConfig, KF5I18n, KF5I18nConfig, KF5Purpose, KF5PurposeConfig, KF5Kirigami2)
+sudo dnf install -y kf5-kdoctools-devel kf5-kio-devel kf5-ki18n-devel kf5-purpose-devel kf5-kirigami2-devel 
+
+#runtime:
+sudo dnf install -y kf5-kconfig
+echo
+echo
+echo "Now open KDevelop from your desktop's application menu, then open project, then choose kamoso.kdev4"
+echo "(then Build, and then you can find the binary file that is generated: build/bin/kamoso then double-click or make desktop shortcut to run)"

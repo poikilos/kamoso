@@ -64,24 +64,24 @@ Kirigami.ApplicationWindow
         ]
     }
 
-    Mode {
-        id: photoMode
-        mimes: "image/jpeg"
-        checkable: false
-        iconName: "shoot"
-        text: i18n("Shoot")
-        nameFilter: "picture_*"
-
-        onTriggered: {
-            whites.showAll()
-            webcam.takePhoto()
-        }
-
-        Connections {
-            target: webcam
-            onPhotoTaken: awesomeAnimation(path)
-        }
-    }
+//     Mode {
+//         id: photoMode
+//         mimes: "image/jpeg"
+//         checkable: false
+//         iconName: "shoot"
+//         text: i18n("Shoot")
+//         nameFilter: "picture_*"
+// 
+//         onTriggered: {
+//             whites.showAll()
+//             webcam.takePhoto()
+//         }
+// 
+//         Connections {
+//             target: webcam
+//             onPhotoTaken: awesomeAnimation(path)
+//         }
+//     }
     Mode {
         id: burstMode
         mimes: "image/jpeg"
@@ -89,7 +89,7 @@ Kirigami.ApplicationWindow
         iconName: "burst"
         text: i18n("Burst")
         property int photosTaken: 0
-        modeInfo: (photosTaken>0 ? i18np("1 photo", "%1 photos", photosTaken) : "") + (checked? "..." : "")
+        modeInfo: (photosTaken>0 ? ((photosTaken<7)?i18np("1 photo...", "%1 photos of 7...", photosTaken):"done (next group: press star)") : "") + (checked? ("(waiting 5 seconds...)") : "")
         nameFilter: "picture_*"
         onCheckedChanged: if (checked) {
             photosTaken = 0
@@ -98,28 +98,32 @@ Kirigami.ApplicationWindow
         readonly property var smth: Timer {
             id: burstTimer
             running: burstMode.checked
-            interval: 1000
+            interval: 5000
             repeat: true
             onTriggered: {
                 whites.showAll()
                 webcam.takePhoto()
                 burstMode.photosTaken++;
+                if (burstMode.photosTaken >= 7) {
+                    //this.repeat = false;
+                    burstMode.checked = false;
+                }
             }
         }
     }
-    Mode {
-        id: videoMode
-        mimes: "video/x-matroska"
-        checkable: true
-        iconName: "record"
-        text: i18n("Record")
-        modeInfo: webcam.recordingTime
-        nameFilter: "video_*"
-
-        onCheckedChanged: {
-            webcam.isRecording = checked;
-        }
-    }
+//     Mode {
+//         id: videoMode
+//         mimes: "video/x-matroska"
+//         checkable: true
+//         iconName: "record"
+//         text: i18n("Record")
+//         modeInfo: webcam.recordingTime
+//         nameFilter: "video_*"
+// 
+//         onCheckedChanged: {
+//             webcam.isRecording = checked;
+//         }
+//     }
 
     contextDrawer: Kirigami.OverlayDrawer {
         edge: Qt.RightEdge
@@ -192,39 +196,39 @@ Kirigami.ApplicationWindow
         rightPadding: 0
         leftPadding: 0
 
-        state: "shoot"
+        state: "burst"
         states: [
-            State {
-                name: "shoot"
-                PropertyChanges {
-                    target: visor
-                    actions {
-                        left: videoMode.adoptAction
-                        main: photoMode
-                        right: burstMode.adoptAction
-                    }
-                }
-            },
-            State {
-                name: "record"
-                PropertyChanges {
-                    target: visor
-                    actions {
-                        left: photoMode.adoptAction
-                        main: videoMode
-                        right: burstMode.adoptAction
-                    }
-                }
-            },
+//             State {
+//                 name: "shoot"
+//                 PropertyChanges {
+//                     target: visor
+//                     actions {
+//                         left: videoMode.adoptAction
+//                         main: photoMode
+//                         right: burstMode.adoptAction
+//                     }
+//                 }
+//             },
+//             State {
+//                 name: "record"
+//                 PropertyChanges {
+//                     target: visor
+//                     actions {
+//                         left: photoMode.adoptAction
+//                         main: videoMode
+//                         right: burstMode.adoptAction
+//                     }
+//                 }
+//             },
 
             State {
                 name: "burst"
                 PropertyChanges {
                     target: visor
                     actions {
-                        left: videoMode.adoptAction
+                        //left: videoMode.adoptAction
                         main: burstMode
-                        right: photoMode.adoptAction
+                        //right: photoMode.adoptAction
                     }
                 }
             }

@@ -1,3 +1,14 @@
+# visagebox
+
+## Changes in poikilos (photo booth with printing) fork
+(forked from Kamoso)
+* added COMPILING.txt (tips for compiling kamoso)
+* (src/qml/Main.qml) Removed Mode objects for video (id:videoMode) and photo (id:photoMode) leaving only burstMode
+* Hard code number of photos in burst (renamed to shoot) mode
+
+## Credits
+* Film_strip.svg (used in scribus file) By Nevit Dilmen [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) or GFDL (http://www.gnu.org/copyleft/fdl.html)], from Wikimedia Commons
+
 We depend on the following gstreamer source modules:
 gstreamer
 gst-plugins-base
