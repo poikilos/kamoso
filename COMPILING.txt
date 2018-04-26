@@ -1,6 +1,18 @@
 sudo dnf install -y kdevelop gstreamer-plugins-base gstreamer-plugins-good gstreamer-devel cmake
+#resolve `--   Package 'gstreamer-1.0', required by 'virtual:world', not found`:
+sudo dnf install -y gstreamer1-devel
+# resolve
+#```
+#CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+#Please set them or make sure they are set and tested correctly in the CMake files:
+#GSTREAMER_VIDEO_LIBRARY
+#    linked by target "gstkamosoqt5videosink" in directory /home/owner/GitHub/visagebox/src/elements/gstqtvideosink
+#    linked by target "qtvideosink_autotest" in directory /home/owner/GitHub/visagebox/src/elements/gstqtvideosink
+#```:
+sudo dnf install -y gstreamer1-plugins-base-devel
 #NOTE: There is no gstreamer-plugins-good-devel
 #gstreamer-plugins-base-devel
+sudo dnf install -y gstreamer1-plugins-good
 #resolve `Could not find a package configuration file provided by "ECM"`:
 sudo dnf install -y extra-cmake-modules
 #resolve `Could not find a package configuration file provided by "Qt5Quick"`:
@@ -11,6 +23,7 @@ sudo dnf install -y kf5-kconfig-devel
 sudo dnf install -y kf5-kdoctools-devel kf5-kio-devel kf5-ki18n-devel kf5-purpose-devel kf5-kirigami2-devel 
 
 #runtime:
+(see also README.md for [end user] requirements)
 sudo dnf install -y kf5-kconfig
 echo
 echo

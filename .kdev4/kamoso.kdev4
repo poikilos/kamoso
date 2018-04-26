@@ -1,16 +1,28 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x0c\x00k\x00a\x00m\x00o\x00s\x00o)
+
 [CMake]
-Build Directory Count=1
+Build Directory Count=2
 Current Build Directory Index-Host System=0
 
 [CMake][CMake Build Directory 0]
-Build Directory Path=/home/student/Downloads/kamoso/build
+Build Directory Path=/home/owner/GitHub/visagebox-debug
 Build Type=Debug
 CMake Binary=/usr/bin/cmake
 CMake Executable=/usr/bin/cmake
 Environment Profile=
 Extra Arguments=
-Install Directory=
+Install Directory=/usr/local
 Runtime=Host System
+
+[CMake][CMake Build Directory 1]
+Build Directory Path=/home/owner/GitHub/visagebox-release
+Build Type=Release
+CMake Binary=/usr/bin/cmake
+CMake Executable=/usr/bin/cmake
+Environment Profile=
+Extra Arguments=
+Install Directory=/usr/local
 
 [Project]
 VersionControlSupport=kdevgit

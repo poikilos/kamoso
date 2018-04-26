@@ -89,7 +89,7 @@ Kirigami.ApplicationWindow
         iconName: "burst"
         text: i18n("Burst")
         property int photosTaken: 0
-        modeInfo: (photosTaken>0 ? ((photosTaken<7)?i18np("1 photo...", "%1 photos of 7...", photosTaken):"done (next group: press star)") : "") + (checked? ("(waiting 5 seconds...)") : "")
+        modeInfo: (photosTaken>0 ? ((photosTaken<6)?i18np("1 of 6 photos...", "%1 of 6 photos...", photosTaken):"done (next group: press star)") : "") + (checked? ("(waiting 5 seconds...)") : "")
         nameFilter: "picture_*"
         onCheckedChanged: if (checked) {
             photosTaken = 0
@@ -104,7 +104,7 @@ Kirigami.ApplicationWindow
                 whites.showAll()
                 webcam.takePhoto()
                 burstMode.photosTaken++;
-                if (burstMode.photosTaken >= 7) {
+                if (burstMode.photosTaken >= 6) {
                     //this.repeat = false;
                     burstMode.checked = false;
                 }
