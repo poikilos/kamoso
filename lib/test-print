@@ -1,0 +1,10 @@
+#!/bin/sh
+scribus letter-filmstrip6_3to2ratio.sla -py printfilmstrip.py 
+#lp -d YOUR_PRINTER_NAME *.pdf
+lp letter-filmstrip6_3to2ratio.pdf
+#scribus -g -ns -py printfilmstrip.py letter-filmstrip6_3to2ratio.sla
+#-py (same as --python-script but either only work in scribus>=1.5) <path>
+#-g No GUI
+#-ns no splash 
+
+#IF sla filename is after py filename, above DOESN'T WORK (always says no file loaded, even if py file sleeps 5 sec)

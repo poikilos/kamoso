@@ -13,7 +13,20 @@
 
 ## System Requirements
 (see also COMPILING.txt if compiling from source)
-scribus
+scribus 1.5 (only 1.5 has python scripting from terminal, however, script always says file not found, so switched to scribus-generator)
+```
+#sudo dnf copr enable luya/scribus
+#sudo dnf remove -y scribus
+#sudo dnf install -y scribus
+#manually patch issue in 1.5.1:
+#if [ -d /usr/share/scribus/icons/1_5_1 ]; then
+#  cd /usr/share/scribus/icons/1_5_1
+#  if [ ! -f zeichen.png ]; then
+#    sudo cp Zeichen.png zeichen.png
+#  fi
+#fi
+sudo dnf install -y scribus-generator
+```
 
 ### More
 We depend on the following gstreamer source modules:
@@ -37,3 +50,6 @@ videobalance
 ffmpegcolorspace
 
 Also, to get Facebook support we depend of kipi-facebook (normally packaged just within kipi-plugins).
+
+## Developer Notes
+* scribus python file will not work if -py option is BEFORE the sla filename in the scribus command
