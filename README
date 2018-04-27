@@ -1,7 +1,8 @@
 # visagebox
 
 ## Installation
-* Manually compile using KDevelop.
+* See "System Requirements" below for required packages
+* Manually compile using KDevelop (see COMPILING.txt)
 * In terminal, cd to the visagebox project folder (as the user who downloaded and compiled), then run:
   `bash install-visagebox-stopgap`
 
@@ -19,6 +20,12 @@
 * still named kamoso internally
 
 ## Changes in poikilos (photo booth with printing) fork
+(2018-04-27)
+* switched back to 640x640 to work with approximately all webcams (and avoid freezing on cheap webcams)--otherwise has:
+```
+error debugMessage: Internal data stream error.
+"gstbasesrc.c(2939): gst_base_src_loop (): /GstCameraBin:camerabin/GstWrapperCameraBinSrc:video_balance/GstBin:bin16/GstV4l2Src:v4l2src8:\nstreaming stopped, reason not-negotiated (-4)"
+``` 
 (2018-04-26)
 * (webcamcontrol.cpp) changed default resolution from 640x480 to 800x600
 * first full-featured version of fork (prints to default printer if scribus and lp are in path)
@@ -32,19 +39,19 @@
 
 ## System Requirements
 (see also COMPILING.txt if compiling from source)
-scribus 1.5 (only 1.5 has python scripting from terminal, however, script always says file not found, so switched to scribus-generator)
+scribus 1.5 (only 1.5 has python scripting from terminal; py file must be AFTER sla file, otherwise will say file not found in console output)
 ```
-#sudo dnf copr enable luya/scribus
-#sudo dnf remove -y scribus
-#sudo dnf install -y scribus
+sudo dnf -y copr enable luya/scribus
+sudo dnf remove -y scribus
+sudo dnf install -y scribus
 #manually patch issue in 1.5.1:
-#if [ -d /usr/share/scribus/icons/1_5_1 ]; then
-#  cd /usr/share/scribus/icons/1_5_1
-#  if [ ! -f zeichen.png ]; then
-#    sudo cp Zeichen.png zeichen.png
-#  fi
-#fi
-sudo dnf install -y scribus-generator
+if [ -d /usr/share/scribus/icons/1_5_1 ]; then
+  cd /usr/share/scribus/icons/1_5_1
+  if [ ! -f zeichen.png ]; then
+    sudo cp Zeichen.png zeichen.png
+  fi
+fi
+#sudo dnf install -y scribus-generator
 ```
 
 ### More

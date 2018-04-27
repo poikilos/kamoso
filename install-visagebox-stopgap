@@ -4,9 +4,16 @@ if [ -f "`command -v apt`" ]; then
   su -c 'apt update'
   install_bin="apt install install -y"
 fi
+#$install_bin frei0r
+echo "$install_bin frei0r-plugins frei0r-devel" >> install-as-root.tmp
+su -c 'bash install-as-root.tmp'
+rm install-as-root.tmp
+
 if [ ! -d "$HOME/GitHub/visagebox" ]; then
   if [ ! -f "`command -v git`" ]; then
-    su -c '$install_bin git'
+    echo "$install_bin git" >> install-as-root.tmp
+    su -c 'bash install-as-root.tmp'
+    rm install-as-root.tmp
   fi
   if [ ! -d "$HOME/GitHub" ]; then
     mkdir "$HOME/GitHub"
