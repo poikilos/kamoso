@@ -18,6 +18,7 @@
 * You must manually run the install-visagebox-stopgap script to install
 * make install doesn't work yet
 * still named kamoso internally
+* pinning to KDE taskbar creates a shortcut to kamoso instead of visagebox
 
 ## Changes in poikilos (photo booth with printing) fork
 (2018-04-27)
