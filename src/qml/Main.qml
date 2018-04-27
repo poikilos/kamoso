@@ -13,7 +13,7 @@ Kirigami.ApplicationWindow
     width: 700
     height: width*3/4
     visible: true
-    title: i18n("Kamoso")
+    title: i18n("VisageBox")
     header: Item {}
 
     function awesomeAnimation(path) {
@@ -101,12 +101,16 @@ Kirigami.ApplicationWindow
             interval: 5000
             repeat: true
             onTriggered: {
-                whites.showAll()
-                webcam.takePhoto()
+                //webcam is a Kamoso object created as a context property by webcamcontrol.cpp
+                if (burstMode.photosTaken == 0) {
+                    webcam.startSession();
+                }
+                whites.showAll();
+                webcam.takePhoto();
                 burstMode.photosTaken++;
                 if (burstMode.photosTaken >= 6) {
-                    //this.repeat = false;
-                    burstMode.checked = false;
+                    burstMode.checked = false; //stop right away, so stopping isn't skipped on error
+                    webcam.printSession();
                 }
             }
         }
@@ -178,7 +182,7 @@ Kirigami.ApplicationWindow
                         level: 1
                         color: "white"
                         elide: Text.ElideRight
-                        text: i18n("Kamoso Gallery")
+                        text: i18n("VisageBox Gallery")
                     }
                 }
         }

@@ -1,6 +1,7 @@
 #!/bin/sh
-scribus letter-filmstrip6_3to2ratio.sla -py printfilmstrip.py 
+scribus letter-filmstrip6_3to2ratio.sla -py printfilmstrip.py
 #lp -d YOUR_PRINTER_NAME *.pdf
+#-d: specify device
 lp letter-filmstrip6_3to2ratio.pdf
 #scribus -g -ns -py printfilmstrip.py letter-filmstrip6_3to2ratio.sla
 #-py (same as --python-script but either only work in scribus>=1.5) <path>

@@ -35,6 +35,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QTemporaryFile>
 #include <QIcon>
+#include <QProcess>
 
 Kamoso::Kamoso(WebcamControl *webcamControl)
     : m_webcamControl(webcamControl)
@@ -78,17 +79,47 @@ QUrl Kamoso::fileNameSuggestion(const QUrl &saveUrl, const QString &name, const 
 
     return path;
 }
-
+QUrl Kamoso::fileNameSuggestion(const QUrl &saveUrl, const QString& extension) const
+{
+    QUrl path(saveUrl.toString() + "/" + QStringLiteral("%1.%2").arg(QString::number(this->photoNumber), extension));
+    return path;
+}
+void Kamoso::startSession() {
+    this->photoNumber = 1;
+    QDateTime now = QDateTime::currentDateTime();
+    
+    this->sessionName = now.toString("yyyy-MM-dd_hh-mm-ss");
+    this->sessionUrl = QUrl(Settings::saveUrl().toString() + "/" + this->sessionName);
+    if (!QDir(this->sessionUrl.toLocalFile()).exists()) {
+        QDir().mkdir(this->sessionUrl.toLocalFile());
+    }
+}
+void Kamoso::printSession() {
+    QString templateSrcPath = QDir::cleanPath(Settings::saveUrl().toLocalFile() + QDir::separator() + "visagebox-print.sla");
+    QString templateDestPath = QDir::cleanPath(this->sessionUrl.toLocalFile() + QDir::separator() + "visagebox-print.sla");
+    QString pyPath = QDir::cleanPath(Settings::saveUrl().toLocalFile() + QDir::separator() + "printfilmstrip.py");
+    QFile::copy(templateSrcPath, templateDestPath);
+    QProcess scribusProc;
+    scribusProc.start("scribus", QStringList() << "-g" << "-ns" << templateDestPath << "-py" << pyPath);
+    scribusProc.waitForFinished();
+    QByteArray scribusOutput = scribusProc.readAll();
+    QString pdfPath = QDir::cleanPath(this->sessionUrl.toLocalFile() + QDir::separator() + "visagebox-print.pdf");
+    //visagebox-print
+    QProcess lpProc;
+    lpProc.start("lp", QStringList() << pdfPath);
+    lpProc.waitForFinished();
+    QByteArray lpOutput = lpProc.readAll();
+}
 const QString Kamoso::takePhoto()
 {
-    const QUrl path = fileNameSuggestion(Settings::saveUrl(), "picture", "jpg");
+    const QUrl path = fileNameSuggestion(this->sessionUrl, "jpg");
     m_webcamControl->takePhoto(path);
 
     if (path.isLocalFile()) {
         m_sampleImagePath = path.toLocalFile();
         Q_EMIT sampleImageChanged(m_sampleImagePath);
     }
-
+    this->photoNumber++;
     return path.toDisplayString();
 }
 

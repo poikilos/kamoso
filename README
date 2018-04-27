@@ -1,8 +1,23 @@
 # visagebox
 
+## Usage
+* You must manually copy the following files to $HOME/Pictures:
+  * src/visagebox-print.sla
+  * src/printfilmstrip.py
+* You must set a default printer
+* Manually compile using KDevelop, then manually run /home/owner/GitHub/visagebox-debug/bin/kamoso
+  or copy the src/org.poikilos.visagebox.desktop file to $HOME/Desktop/
+
+## Known Issues
+* You must manually copy files to $HOME/Pictures (should use $PREFIX/lib/visagebox instead)
+* Debug version is default target
+* make install doesn't work yet
+* still named kamoso internally
+
 ## Changes in poikilos (photo booth with printing) fork
 (2018-04-26)
 * (webcamcontrol.cpp) changed default resolution from 640x480 to 800x600
+* first full-featured version of fork (prints to default printer if scribus and lp are in path)
 (forked from Kamoso)
 * added COMPILING.txt (tips for compiling kamoso)
 * (src/qml/Main.qml) Removed Mode objects for video (id:videoMode) and photo (id:photoMode) leaving only burstMode

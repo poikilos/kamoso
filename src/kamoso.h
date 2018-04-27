@@ -49,6 +49,8 @@ Q_OBJECT
         QString sampleImage() const { return m_sampleImagePath; }
 
     public Q_SLOTS:
+        void startSession();
+        void printSession();
         const QString takePhoto();
         void resetDeviceSettings();
 
@@ -60,11 +62,15 @@ Q_OBJECT
 
     private:
         QUrl fileNameSuggestion(const QUrl &saveUrl, const QString &name, const QString& extension) const;
+        QUrl fileNameSuggestion(const QUrl &saveUrl, const QString& extension) const;
 
         WebcamControl * const m_webcamControl;
         QTimer m_recordingTimer;
         QElapsedTimer m_recordingTime;
         QString m_sampleImagePath;
+        QUrl sessionUrl;
+        QString sessionName;
+        int photoNumber;
 };
 
 #endif // KAMOSO_H
