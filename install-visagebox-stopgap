@@ -1,0 +1,72 @@
+#!/bin/sh
+install_bin="dnf install -y"
+if [ -f "`command -v apt`" ]; then
+  su -c 'apt update'
+  install_bin="apt install install -y"
+fi
+if [ ! -d "$HOME/GitHub/visagebox" ]; then
+  if [ ! -f "`command -v git`" ]; then
+    su -c '$install_bin git'
+  fi
+  if [ ! -d "$HOME/GitHub" ]; then
+    mkdir "$HOME/GitHub"
+  fi
+  cd "$HOME/GitHub"
+  git clone https://github.com/poikilos/visagebox
+  cd "visagebox"
+fi
+if [ ! -f "lib/printfilmstrip.py" ]; then
+  echo "ERROR: Nothing done since must be run from root of repo (could not find /lib/printfilmstrip.py)"
+  exit 1
+fi
+if [ ! -d "$HOME/Pictures" ]; then
+  mkdir -p "$HOME/Pictures"
+fi
+cp "lib/printfilmstrip.py" "$HOME/Pictures/"
+if [ ! -f "lib/visagebox-print.sla" ]; then
+  echo "ERROR: Nothing done since must be run from root of repo (could not find /lib/printfilmstrip.py)"
+  exit 1
+fi
+cp "lib/visagebox-print.sla" "$HOME/Pictures/"
+echo
+echo
+if [ ! -f "build/bin/kamoso" ]; then
+  echo "For now, you must manually compile before running this script:"
+  echo "* Open $HOMvisagebox.kdev4 in KDevelop"
+  echo "  * Choose Release build type"
+  echo "  * Choose installation prefix /usr/local"
+  echo "  * OK"
+  exit 1
+fi
+
+if [ ! -d "/usr/local/lib/visagebox" ]; then
+  su -c 'mkdir -p "/usr/local/lib/visagebox"'
+fi
+if [ ! -d "/usr/local/share/applications" ]; then
+  su -c 'mkdir -p "/usr/local/share/applications"'
+fi
+if [ ! -d "/usr/local/lib/visagebox" ]; then
+  su -c 'mkdir -p "/usr/local/lib/visagebox"'
+fi
+#$
+echo 
+echo "cp -f \"$HOME/GitHub/visagebox/build/bin/gstkamosoqt5videosink.so\" \"/usr/local/lib/visagebox/\"" >> install-as-root.tmp
+echo "cp -f \"$HOME/GitHub/visagebox/build/bin/qtvideosink_autotest\" \"/usr/local/lib/visagebox/\"" >> install-as-root.tmp
+echo "cp -f \"$HOME/GitHub/visagebox/build/bin/kamoso\" \"/usr/local/lib/visagebox/visagebox\"" >> install-as-root.tmp
+echo "cp -f \"$HOME/GitHub/visagebox/src/org.poikilos.visagebox-hacky.desktop\" \"/usr/local/share/applications/org.poikilos.visagebox.desktop\"" >> install-as-root.tmp
+su -c 'bash install-as-root.tmp'
+rm install-as-root.tmp
+if [ -f "$HOME/Desktop/org.poikilos.visagebox.desktop" ]; then
+  rm "$HOME/Desktop/org.poikilos.visagebox.desktop"
+fi
+ln -s "/usr/local/share/applications/org.poikilos.visagebox.desktop" "$HOME/Desktop/org.poikilos.visagebox.desktop"
+echo
+if [ ! -f "`command -v scribus`" ]; then
+  echo "WARNING: This program requires scribus 1.5 or later (only tested on 1.5.2) installed for python scripting (automatic printing via template) you may need to enable the copr repo for that version such as if you are using Ubuntu Xenial or Fedora 28 or earlier--see README"
+  #exit 1
+fi
+if [ ! -f "`command -v lp`" ]; then
+  echo "This program requires the lp command for automatic printing"
+  #exit 1
+fi
+

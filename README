@@ -1,16 +1,20 @@
 # visagebox
 
+## Installation
+* Manually compile using KDevelop.
+* In terminal, cd to the visagebox project folder (as the user who downloaded and compiled), then run:
+  `bash install-visagebox-stopgap`
+
 ## Usage
-* You must manually copy the following files to $HOME/Pictures:
-  * src/visagebox-print.sla
-  * src/printfilmstrip.py
-* You must set a default printer
-* Manually compile using KDevelop, then manually run /home/owner/GitHub/visagebox-debug/bin/kamoso
-  or copy the src/org.poikilos.visagebox.desktop file to $HOME/Desktop/
+* You must set a default printer (for automatic printing to work).
+* Open the "photo booth" icon (on the desktop of the user who ran install-visagebox-stopgap, otherwise in application menu).
+* Press blue star to start a session.
+  Photos will print automatically if this program is setup properly (note and correct any errors shown by install-visagebox-stopgap).
+  Sessions (6 photos each) are stored in Pictures (with date and time as subfolder name).
 
 ## Known Issues
-* You must manually copy files to $HOME/Pictures (should use $PREFIX/lib/visagebox instead)
-* Debug version is default target
+* Should store template and scribus script in $PREFIX/lib/visagebox instead of $HOME/Pictures
+* You must manually run the install-visagebox-stopgap script to install
 * make install doesn't work yet
 * still named kamoso internally
 
